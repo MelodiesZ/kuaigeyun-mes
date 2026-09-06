@@ -1508,10 +1508,9 @@ export function UniTable<T extends Record<string, any> = Record<string, any>>({
 
   useEffect(() => {
     if (selectedRowKeysProp !== undefined) {
+      // 受控值已由 rowSelection.selectedRowKeys 下传；这里只同步内部备用状态。
+      // 勿调用 clearSelected：它会回传新的 []，使父组件 setState 后再次进入此 effect。
       setInternalSelectedRowKeys(selectedRowKeysProp)
-      if (selectedRowKeysProp.length === 0) {
-        nativeTableActionRef.current?.clearSelected?.()
-      }
     }
   }, [selectedRowKeysProp])
 
